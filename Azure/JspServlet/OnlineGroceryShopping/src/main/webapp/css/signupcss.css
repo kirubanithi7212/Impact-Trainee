@@ -1,0 +1,67 @@
+body {
+  font: 1em Helvetica;
+    background-image:url("images/home1.jpg");
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  background-size:cover;
+}
+
+#container {
+  width: 840px;
+  margin-left:550px;
+  margin-top:70px;
+}
+
+
+.signup {
+  float: left;
+  width: 300px;
+  padding: 30px 20px;
+  background-color: white;
+  text-align: center;
+  border-radius: 5px 0 0 5px;
+}
+
+
+[type=tel],[type=text],[type=email],[type=number],[type=password],select,option {
+  display: block;
+  margin: 0 auto;
+  width: 80%;
+  border: 0;
+  border-bottom: 1px solid rgba(0,0,0,.2);
+  height: 45px;
+  line-height: 45px;  
+  margin-bottom: 10px;
+  font-size: 1em;
+  color: black;
+}
+
+[type=submit] {
+  margin-top: 25px;
+  width: 80%;
+  border: 0;
+  background-color:orange;
+  border-radius: 5px;
+  height: 50px;
+  color: white;
+  font-weight: 400;
+  font-size: 1em;
+}
+
+[type=submit]:hover
+{
+	background-color:green;
+}
+[type='text']:focus {
+  outline: none;
+  border-color: #53CACE;
+}
+
+h1 {
+	text-shadow: 5px 5px 5px rgb(54, 6, 167);
+	color:white;
+  text-align:center;
+  font-weight: 900;
+  font-size: 2.5em;
+}
+
