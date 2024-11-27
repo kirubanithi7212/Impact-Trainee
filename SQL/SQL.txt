@@ -1,1 +1,171 @@
-SQL
+--                                 Basic Queries
+
+-- 1. Write a query to display all rows and columns from the employee table.
+select* from employee;
+
+-- 2. Retrieve only the name and salary of all employees from the employees table.
+select employeeName,salary from employee;
+
+-- 3. Write a query to find all employees whose salary is greater than 50,000.
+select * from employee where salary>50000.00
+
+-- 4. List all employees who joined the company in the year 2021.
+select * from employee where dateOfJoining like '%2021%';
+
+-- 5. Retrieve the details of employees whose names start with the letter 'A'.
+select * from employee where employeeName like 'a%';
+
+
+
+--         Aggregate Functions
+
+-- 1. Write a query to calculate the average salary of all employees.
+select departmentId,avg(salary) As average from employee;
+
+-- 2. Find the total number of employees in the company.
+select count(*) AS totalNOEmployee from employee;
+
+
+-- 3. Write a query to find the highest salary in the employees table.
+select max(salary) As highest from employee;
+
+-- 4. Calculate the total salary paid by the company for all employees.
+select sum(salary) as TotalSalaryPerMonth from employee;
+
+-- 5. Find the count of employees in each department.
+select departmentId,count(*) from employee group by departmentId;
+
+
+
+
+--       Joins
+
+-- 1. Write a query to retrieve employee names along with their department names (using employees and departments tables).
+select e.employeeName ,department.departmentName from employee e join department on e.departmentId=department.departmentId;
+
+
+-- 2. List all employees who have a manager (self-join on employees table).
+alter table employee add managerName varchar(30);
+update employee set managerName='ragavan',managerId=34223 where departmentId=7;
+ 
+ SELECT e.employeeName AS employeeName, m.managerName AS managerName FROM employee e JOIN employee m ON e.managerId = m.ManagerId;
+
+-- 3. Find the names of employees who are working on multiple projects (using employees and projects tables).
+CREATE TABLE projects (
+			    projectName VARCHAR(100) NOT NULL,     
+    AssignedEmpId int         
+);
+INSERT INTO projects ( projectName, AssignedEmpId)
+VALUES ( 'Project Alpha', 1029);
+
+INSERT INTO projects ( projectName, AssignedEmpId)
+VALUES ( 'Project Beta', 1029);
+
+INSERT INTO projects ( projectName, AssignedEmpId)
+VALUES ( 'Project Gamma', 1031);
+
+
+-- 4. Write a query to display all projects and the employees assigned to them.
+
+-- 5. Retrieve the names of employees who do not belong to any department.
+    select employeeName from employee where departmentId is null;
+update employee set departmentId=null where departmentId=5;
+
+
+
+--                                            Subqueries
+
+-- 1. Write a query to find the employees with the second-highest salary.
+SELECT employeeName FROM employee WHERE salary = ( SELECT MAX(salary) FROM employee WHERE salary < (SELECT MAX(salary) FROM employee));
+
+
+-- 2. Retrieve the names of employees whose salary is above the department average salary.
+SELECT employeeName,departmentId FROM employee  WHERE salary > ( SELECT AVG(salary) FROM employee WHERE departmentId = 1 );
+-- 3. Find employees who earn more than the average salary of the entire company.
+SELECT employeeName FROM employee WHERE salary > (SELECT AVG(salary) FROM employee);
+
+
+-- 4. Write a query to find the department with the highest number of employees.
+
+
+-- 5. List all employees who work in a department located in 'New York'.
+alter table department add departLocation varchar(20);
+update department set departLocation='NewYork' where departmentId=7 ;
+SELECT employee.employeeName FROM employee  JOIN department  ON employee.departmentId = department.departmentId WHERE department.departLocation = 'NewYork';
+
+
+
+
+--                                  Set Operators
+
+-- 1. Write a query to find employees who work in either the 'HR' or 'Finance' department.
+      SELECT employeeName,departmentId  from employee WHERE departmentId = (SELECT departmentId FROM department WHERE departmentName = 'HR') UNION SELECT employeeName,departmentId FROM employee WHERE departmentId IN (SELECT departmentId FROM department WHERE departmentName = 'Finance');
+
+-- 2. Retrieve the names of employees who are working on both Project A and Project B.
+
+
+-- 3. Find employees who are not assigned to any project.
+
+
+
+-- 4. Write a query to get all unique job titles across all departments.
+
+
+-- 5. Combine two tables (employees and former_employees) and remove duplicates.
+
+
+
+
+--                                   DML and DDL
+
+
+-- 1. Write a query to add a new employee to the employees table.
+INSERT INTO employee(departmentId, employeeName,dateOfJoining, salary, location,employeeId )VALUES(1, 'ram', '2024-08-15',25000, 'salem', 6503);
+
+-- 2. Update the salary of all employees in the 'IT' department by 10%.
+UPDATE employee set salary=67000.00 where departmentId=(select departmentId from department where departmentName='It');
+
+-- 3. Delete all employees who have not worked for more than 5 years.
+
+
+-- 4. Create a new table departments_backup with the same structure as the departments table.
+create table departmentBackUp(departmentId int(8) primary key,departmentName varchar(10),count int(5));
+select * from departmentBackUp;
+-- 5. Drop the temporary_data table from the database.
+create table temporary_data (id int,count int);
+drop table temporary_data
+
+
+--                        Constraints
+
+
+-- 1. Add a primary key to the employees table.
+ALTER TABLE employee ADD  PRIMARY KEY (employeeId);
+
+-- 2. Write a query to create a foreign key between employees and departments tables.
+ALTER TABLE employees
+ADD CONSTRAINT epartmentId FOREIGN KEY (departmentId)
+REFERENCES departments(departmentId);
+
+-- 3. Add a unique constraint to the email column in the employees table.
+alter table employee add emailId varchar(50);
+ALTER TABLE employee ADD CONSTRAINT emailId UNIQUE (emailId);
+
+-- 4. Write a query to check all constraints applied on the employees table.
+show keys from employee;
+
+-- 5. Remove the NOT NULL constraint from the phone_number column in the employees table
+
+
+
+
+
+
+
+
+
+
+
+
+
+
